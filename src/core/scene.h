@@ -26,8 +26,7 @@ public:
     void handleInput();
 
 protected:
-    GLFWwindow *window = NULL;
-    Camera camera;
+    Camera *camera;
     WindowManager *WM;
     ShaderManager *SM;
     InputManager *IM;

@@ -13,9 +13,10 @@ public:
     virtual ~InputManager();
 
     void handle();
-    void registerCamera(Camera c);
+    void registerCamera(Camera* c);
 protected:
 private:
+    Camera *camera = NULL;
     WindowManager* WM;
     std::vector<int> registeredKeys = {
         GLFW_KEY_ESCAPE,

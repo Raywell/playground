@@ -6,15 +6,11 @@
 #include "shaders/fragmentshader.h"
 #include "scene.h"
 
-Scene::Scene() :
-    camera()
-{
+Scene::Scene() {
     glfwInit();
-
 
     WM = new WindowManager();
     WM->init();
-    WM->createRenderingWindow();
 
     // Init shader program
     const char *vShaderSrc, *fShaderSrc;
@@ -23,22 +19,26 @@ Scene::Scene() :
 
     SM = new ShaderManager(vShaderSrc, fShaderSrc, NULL);
 
+    camera = new Camera();
+
     IM = new InputManager(WM);
+    IM->registerCamera(camera);
 
     model = glm::mat4(); // Identity
     projection = glm::perspective(glm::radians(45.0f), (float)800/(float)600, 0.1f, 100.0f);
 }
 
 Scene::~Scene() {
-    delete WM;
-    delete SM;
     delete IM;
+    delete camera;
+    delete SM;
+    delete WM;
     glfwTerminate();
 }
 
 void Scene::run() {
     this->beforeRun();
-    while(WM->windowShouldClose())
+    while(!WM->windowShouldClose())
     {
         this->handleInput();
 
@@ -182,7 +182,7 @@ void Scene::render() {
     unsigned int projectionLoc = glGetUniformLocation(SM->ID, "projection");
 
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera.lookAt()));
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera->lookAt()));
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
@@ -192,15 +192,4 @@ void Scene::render() {
 
 void Scene::handleInput() {
     IM->handle();
-    float cameraSpeed = 0.05f;
-    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.c_pos += cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.c_pos -= cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.c_pos -= glm::normalize(glm::cross(cameraFront, camera.up)) * cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.c_pos += glm::normalize(glm::cross(cameraFront, camera.up)) * cameraSpeed;
-    camera.t_pos = camera.c_pos + cameraFront;
 }
