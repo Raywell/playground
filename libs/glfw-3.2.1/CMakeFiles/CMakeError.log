@@ -1,0 +1,106 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/artem/gl/libs/glfw-3.2.1/CMakeFiles/CMakeTmp
+
+Run Build Command:/bin/gmake "cmTryCompileExec1270650513/fast"
+/bin/gmake -f CMakeFiles/cmTryCompileExec1270650513.dir/build.make CMakeFiles/cmTryCompileExec1270650513.dir/build
+gmake[1]: Entering directory `/home/artem/gl/libs/glfw-3.2.1/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/artem/gl/libs/glfw-3.2.1/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1270650513.dir/CheckSymbolExists.c.o
+/bin/cc    -o CMakeFiles/cmTryCompileExec1270650513.dir/CheckSymbolExists.c.o   -c /home/artem/gl/libs/glfw-3.2.1/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec1270650513
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1270650513.dir/link.txt --verbose=1
+/bin/cc       CMakeFiles/cmTryCompileExec1270650513.dir/CheckSymbolExists.c.o  -o cmTryCompileExec1270650513 -rdynamic 
+CMakeFiles/cmTryCompileExec1270650513.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [cmTryCompileExec1270650513] Error 1
+gmake[1]: Leaving directory `/home/artem/gl/libs/glfw-3.2.1/CMakeFiles/CMakeTmp'
+gmake: *** [cmTryCompileExec1270650513/fast] Error 2
+
+File /home/artem/gl/libs/glfw-3.2.1/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/artem/gl/libs/glfw-3.2.1/CMakeFiles/CMakeTmp
+
+Run Build Command:/bin/gmake "cmTryCompileExec458800490/fast"
+/bin/gmake -f CMakeFiles/cmTryCompileExec458800490.dir/build.make CMakeFiles/cmTryCompileExec458800490.dir/build
+gmake[1]: Entering directory `/home/artem/gl/libs/glfw-3.2.1/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/artem/gl/libs/glfw-3.2.1/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec458800490.dir/CheckFunctionExists.c.o
+/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec458800490.dir/CheckFunctionExists.c.o   -c /usr/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec458800490
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec458800490.dir/link.txt --verbose=1
+/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec458800490.dir/CheckFunctionExists.c.o  -o cmTryCompileExec458800490 -rdynamic -lpthreads 
+/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [cmTryCompileExec458800490] Error 1
+gmake[1]: Leaving directory `/home/artem/gl/libs/glfw-3.2.1/CMakeFiles/CMakeTmp'
+gmake: *** [cmTryCompileExec458800490/fast] Error 2
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/artem/gl/project/libs/glfw-3.2.1/CMakeFiles/CMakeTmp
+
+Run Build Command:/bin/gmake "cmTryCompileExec656437332/fast"
+/bin/gmake -f CMakeFiles/cmTryCompileExec656437332.dir/build.make CMakeFiles/cmTryCompileExec656437332.dir/build
+gmake[1]: Entering directory `/home/artem/gl/project/libs/glfw-3.2.1/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/artem/gl/project/libs/glfw-3.2.1/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec656437332.dir/CheckSymbolExists.c.o
+/bin/cc    -o CMakeFiles/cmTryCompileExec656437332.dir/CheckSymbolExists.c.o   -c /home/artem/gl/project/libs/glfw-3.2.1/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec656437332
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec656437332.dir/link.txt --verbose=1
+/bin/cc       CMakeFiles/cmTryCompileExec656437332.dir/CheckSymbolExists.c.o  -o cmTryCompileExec656437332 -rdynamic 
+CMakeFiles/cmTryCompileExec656437332.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [cmTryCompileExec656437332] Error 1
+gmake[1]: Leaving directory `/home/artem/gl/project/libs/glfw-3.2.1/CMakeFiles/CMakeTmp'
+gmake: *** [cmTryCompileExec656437332/fast] Error 2
+
+File /home/artem/gl/project/libs/glfw-3.2.1/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/artem/gl/project/libs/glfw-3.2.1/CMakeFiles/CMakeTmp
+
+Run Build Command:/bin/gmake "cmTryCompileExec912481616/fast"
+/bin/gmake -f CMakeFiles/cmTryCompileExec912481616.dir/build.make CMakeFiles/cmTryCompileExec912481616.dir/build
+gmake[1]: Entering directory `/home/artem/gl/project/libs/glfw-3.2.1/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/artem/gl/project/libs/glfw-3.2.1/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec912481616.dir/CheckFunctionExists.c.o
+/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec912481616.dir/CheckFunctionExists.c.o   -c /usr/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec912481616
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec912481616.dir/link.txt --verbose=1
+/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec912481616.dir/CheckFunctionExists.c.o  -o cmTryCompileExec912481616 -rdynamic -lpthreads 
+/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [cmTryCompileExec912481616] Error 1
+gmake[1]: Leaving directory `/home/artem/gl/project/libs/glfw-3.2.1/CMakeFiles/CMakeTmp'
+gmake: *** [cmTryCompileExec912481616/fast] Error 2
+
+
