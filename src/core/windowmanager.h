@@ -16,6 +16,9 @@ public:
     void swapBuffers();
     void closeWindow();
     int getKeyState(int key);
+
+    int width;
+    int height;
 protected:
 private:
     GLFWwindow *window = NULL;

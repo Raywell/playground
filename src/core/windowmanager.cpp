@@ -8,7 +8,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-WindowManager::WindowManager()
+WindowManager::WindowManager() :
+width(800),
+height(600)
 {
 }
 
@@ -25,8 +27,8 @@ void WindowManager::init() {
     }
 }
 
-bool WindowManager::createRenderingWindow() {
-    this->window = glfwCreateWindow(800, 600, "MyProgram", NULL, NULL);
+bool WindowManager::createRenderingWindow() {;
+    this->window = glfwCreateWindow(width, height, "MyProgram", NULL, NULL);
     if (this->window == NULL)
     {
         std::cout << "Failed to create GLFW this->window" << std::endl;
@@ -42,7 +44,7 @@ bool WindowManager::createRenderingWindow() {
         return false;
     }
 
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, width, height);
     glfwSetFramebufferSizeCallback(this->window, framebuffer_size_callback);
 
     return true;

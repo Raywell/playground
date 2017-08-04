@@ -1,7 +1,8 @@
 #include "inputmanager.h"
 
 InputManager::InputManager(WindowManager* wm) :
-    WM(wm)
+    WM(wm),
+    mouse_speed(0.05f)
 {
 }
 
@@ -9,6 +10,9 @@ InputManager::~InputManager() {
 }
 
 void InputManager::handle() {
+    glfwGetMousePos(&mouse_x_pos, &mouse_y_pos);
+    glfwSetMousePos(WM->width/2, WM->height/2);
+
     for (std::vector<int>::iterator key = registeredKeys.begin() ; key != registeredKeys.end(); ++key) {
         if(WM->getKeyState(*key) == GLFW_PRESS) {
             switch (*key) {

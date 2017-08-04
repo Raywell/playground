@@ -25,6 +25,10 @@ private:
         GLFW_KEY_S,
         GLFW_KEY_D
     };
+
+    float mouse_speed;
+    float mouse_x_pos;
+    float mouse_y_pos;
 };
 
 #endif
