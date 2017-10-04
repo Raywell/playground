@@ -8,70 +8,25 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <vector>
+#include <map>
+
+enum class ShaderType {
+    V,
+    F,
+    G
+};
 
 class ShaderManager
 {
 public:
-    unsigned int ID;
-    ShaderManager(const char* vShaderCode, const char* fShaderCode, const char* gShaderCode)
-    {
-        // vertex Shader
-        unsigned int vertex;
-        if(vShaderCode != nullptr)
-        {
-            vertex = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(vertex, 1, &vShaderCode, NULL);
-            glCompileShader(vertex);
-            checkCompileErrors(vertex, "VERTEX");
-        }
+    GLuint ID;
+    ShaderManager();
+    ~ShaderManager();
 
-        // fragment Shader
-        unsigned int fragment;
-        if(fShaderCode != nullptr)
-        {
-            fragment = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(fragment, 1, &fShaderCode, NULL);
-            glCompileShader(fragment);
-            checkCompileErrors(fragment, "FRAGMENT");
-        }
-        // geometry Shader
-        unsigned int geometry;
-        if(gShaderCode != nullptr)
-        {
-            geometry = glCreateShader(GL_GEOMETRY_SHADER);
-            glShaderSource(geometry, 1, &gShaderCode, NULL);
-            glCompileShader(geometry);
-            checkCompileErrors(geometry, "GEOMETRY");
-        }
-        // shader Program
-        if (vShaderCode == nullptr && fShaderCode == nullptr && gShaderCode == nullptr) {
-            std::cout << "ERROR::SHADERMANAGER : Cannot create shader program - all sources are null \n -- --------------------------------------------------- -- " << std::endl;
-        } else {
-            ID = glCreateProgram();
-            if(vShaderCode != nullptr)
-                glAttachShader(ID, vertex);
-            if(fShaderCode != nullptr)
-                glAttachShader(ID, fragment);
-            if(gShaderCode != nullptr)
-                glAttachShader(ID, geometry);
-            glLinkProgram(ID);
-            checkCompileErrors(ID, "PROGRAM");
-            // delete the shaders as they're linked into our program now and no longer necessery
-            if(vShaderCode != nullptr)
-                glDeleteShader(vertex);
-            if(fShaderCode != nullptr)
-                glDeleteShader(fragment);
-            if(gShaderCode != nullptr)
-                glDeleteShader(geometry);
-        }
+    void compileShaders(std::map<ShaderType, std::vector<std::string>> shadersSrc);
+    void use();
 
-    }
-    // activate the shader
-    // ------------------------------------------------------------------------
-    void use() 
-    { 
-        glUseProgram(ID); 
-    }
     // utility uniform functions
     // ------------------------------------------------------------------------
     void setBool(const std::string &name, bool value) const

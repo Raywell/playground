@@ -8,9 +8,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-WindowManager::WindowManager() :
-width(800),
-height(600)
+WindowManager::WindowManager(int wRes, int hRes) :
+width(wRes),
+height(hRes)
 {
 }
 

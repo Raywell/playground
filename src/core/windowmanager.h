@@ -7,8 +7,10 @@
 class WindowManager
 {
 public:
-    WindowManager();
+    WindowManager(int wRes, int hRes);
     virtual ~WindowManager();
+
+    GLFWwindow* getWindow() { return window; }
 
     void init();
     bool createRenderingWindow();

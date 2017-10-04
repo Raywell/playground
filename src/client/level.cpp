@@ -1,11 +1,11 @@
-#include <core/scene.h>
+#include <core/engine.h>
 #include "level.h"
 
 Level::Level() {
 }
 
 void Level::run() {
-    Scene scene;
-    scene.run();
+    Engine engine;
+    engine.run();
 }
 

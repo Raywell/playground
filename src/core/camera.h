@@ -10,15 +10,18 @@
 class Camera
 {
 public:
-    Camera();
+    Camera(float _fov, float w_h_ratio);
     virtual ~Camera();
-    glm::mat4 lookAt();
+    glm::mat4 lookAt(glm::vec3 target);
 
     glm::vec3 c_pos; // Camera position
     glm::vec3 t_pos; // Target position
     glm::vec3 up; // Up vector
-    float speed;
     glm::vec3 front;
+
+    float speed;
+    float fov; // In degrees
+    glm::mat4 projection;
 protected:
 private:
 };

@@ -1,57 +1,33 @@
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
 #include "shaders/vertexshader.h"
 #include "shaders/fragmentshader.h"
-#include "scene.h"
+#include "renderer.h"
 
-Scene::Scene() {
-    glfwInit();
-
-    WM = new WindowManager();
-    WM->init();
-
+Renderer::Renderer(StateManager *stateManager, WindowManager *windowManager) :
+    stateM(stateManager),
+    windowM(windowManager)
+{
     // Init shader program
-    const char *vShaderSrc, *fShaderSrc;
-    vShaderSrc = VertexShader::getSource();
-    fShaderSrc = FragmentShader::getSource();
-
-    SM = new ShaderManager(vShaderSrc, fShaderSrc, NULL);
-
-    camera = new Camera();
-
-    IM = new InputManager(WM);
-    IM->registerCamera(camera);
+    shadowM = new ShaderManager();
 
     model = glm::mat4(); // Identity
-    projection = glm::perspective(glm::radians(45.0f), (float)800/(float)600, 0.1f, 100.0f);
 }
 
-Scene::~Scene() {
-    delete IM;
-    delete camera;
-    delete SM;
-    delete WM;
-    glfwTerminate();
+Renderer::~Renderer() {
+    delete shadowM;
 }
 
-void Scene::run() {
-    this->beforeRun();
-    while(!WM->windowShouldClose())
-    {
-        this->handleInput();
-
-        this->render();
-
-        WM->swapBuffers();
-        glfwPollEvents();    
-    }
-}
-
-void Scene::beforeRun() {
+void Renderer::initData() {
+    // Initialize all data
     glEnable(GL_DEPTH_TEST);
 
+    // Compile shaders
+    std::map<ShaderType, std::vector<std::string>> shaders {
+       { ShaderType::V, { VertexShader::getSource() } },
+       { ShaderType::F, { FragmentShader::getSource() } }
+    };
+    shadowM->compileShaders(shaders);
+
+    // Test data
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float z = 0.0f;
@@ -170,26 +146,25 @@ void Scene::beforeRun() {
     glBindVertexArray(0); 
 }
 
-void Scene::render() {
+// Renders with alpha delay
+void Renderer::renderFrame(float alpha) {
     glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Wireframe mode. To revert, set to GL_FILL
 
-    SM->use();
+    shadowM->use();
 
-    unsigned int modelLoc = glGetUniformLocation(SM->ID, "model");
-    unsigned int viewLoc = glGetUniformLocation(SM->ID, "view");
-    unsigned int projectionLoc = glGetUniformLocation(SM->ID, "projection");
+    unsigned int modelLoc = glGetUniformLocation(shadowM->ID, "model");
+    unsigned int viewLoc = glGetUniformLocation(shadowM->ID, "view");
+    unsigned int projectionLoc = glGetUniformLocation(shadowM->ID, "projection");
 
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera->lookAt()));
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera->lookAt(glm::vec3(0.0f,0.0f,0.0f))));
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(camera->projection));
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
     glDrawElements(GL_TRIANGLES, 192, GL_UNSIGNED_INT, 0);
     // glBindVertexArray(0); // no need to unbind it every time 
-}
 
-void Scene::handleInput() {
-    IM->handle();
+    windowM->swapBuffers();
+    glfwPollEvents();
 }

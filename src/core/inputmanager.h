@@ -12,7 +12,7 @@ public:
     InputManager(WindowManager* wm);
     virtual ~InputManager();
 
-    void handle();
+    void handleAllInput();
     void registerCamera(Camera* c);
 protected:
 private:
@@ -26,9 +26,9 @@ private:
         GLFW_KEY_D
     };
 
-    float mouse_speed;
-    float mouse_x_pos;
-    float mouse_y_pos;
+    double mouse_speed;
+    double mouse_x_pos;
+    double mouse_y_pos;
 };
 
 #endif

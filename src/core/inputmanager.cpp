@@ -9,9 +9,9 @@ InputManager::InputManager(WindowManager* wm) :
 InputManager::~InputManager() {
 }
 
-void InputManager::handle() {
-    glfwGetMousePos(&mouse_x_pos, &mouse_y_pos);
-    glfwSetMousePos(WM->width/2, WM->height/2);
+void InputManager::handleAllInput() {
+    glfwGetCursorPos(WM->getWindow(), &mouse_x_pos, &mouse_y_pos);
+    glfwSetCursorPos(WM->getWindow(), WM->width/2, WM->height/2);
 
     for (std::vector<int>::iterator key = registeredKeys.begin() ; key != registeredKeys.end(); ++key) {
         if(WM->getKeyState(*key) == GLFW_PRESS) {
