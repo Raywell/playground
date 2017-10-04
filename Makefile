@@ -3,7 +3,7 @@ SRC = src
 OBJECTS_CORE = engine.o inputmanager.o camera.o statemanager.o renderer.o shadermanager.o windowmanager.o glad.o
 OBJECTS_CLIENT = main.o level.o 
 # The flags to use for compilation
-CXXFLAGS = -Wall -m64 -std=c++1y
+CXXFLAGS = -Wall -m64 -std=c++14
 # The code compiler to use for compilation
 CC = g++
 
