@@ -1,9 +1,9 @@
 BIN = bin
 SRC = src
-OBJECTS_CORE = scene.o inputmanager.o camera.o windowmanager.o glad.o
+OBJECTS_CORE = engine.o inputmanager.o camera.o statemanager.o renderer.o shadermanager.o windowmanager.o glad.o
 OBJECTS_CLIENT = main.o level.o 
 # The flags to use for compilation
-CXXFLAGS = -Wall -m64 -std=c++11
+CXXFLAGS = -Wall -m64 -std=c++1y
 # The code compiler to use for compilation
 CC = g++
 
