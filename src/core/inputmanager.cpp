@@ -1,8 +1,7 @@
 #include "inputmanager.h"
 
 InputManager::InputManager(WindowManager* wm) :
-    WM(wm),
-    mouse_speed(0.05f)
+    WM(wm)
 {
 }
 
@@ -15,24 +14,11 @@ void InputManager::handleAllInput() {
 
     for (std::vector<int>::iterator key = registeredKeys.begin() ; key != registeredKeys.end(); ++key) {
         if(WM->getKeyState(*key) == GLFW_PRESS) {
+            camera->handleInput(*key);
             switch (*key) {
                 case GLFW_KEY_ESCAPE:
                     WM->closeWindow();
                 break;
-                case GLFW_KEY_W:
-                    camera->c_pos += camera->speed * camera->front;
-                break;
-                case GLFW_KEY_S:
-                    camera->c_pos -= camera->speed * camera->front;
-                break;
-                case GLFW_KEY_A:
-                    camera->c_pos -= glm::normalize(glm::cross(camera->front, camera->up)) * camera->speed;
-                break;
-                case GLFW_KEY_D:
-                    camera->c_pos += glm::normalize(glm::cross(camera->front, camera->up)) * camera->speed;
-                break;
-
-                camera->t_pos = camera->front;
             }
         }
     }

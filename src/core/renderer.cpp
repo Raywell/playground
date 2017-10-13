@@ -159,8 +159,8 @@ void Renderer::renderFrame(float alpha) {
     unsigned int projectionLoc = glGetUniformLocation(shadowM->ID, "projection");
 
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera->lookAt(glm::vec3(0.0f,0.0f,0.0f))));
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(camera->projection));
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera->getView()));
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(camera->getProjection()));
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
     glDrawElements(GL_TRIANGLES, 192, GL_UNSIGNED_INT, 0);
     // glBindVertexArray(0); // no need to unbind it every time 
