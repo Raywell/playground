@@ -2,9 +2,12 @@
 #include "shaders/fragmentshader.h"
 #include "renderer.h"
 
-Renderer::Renderer(StateManager *stateManager, WindowManager *windowManager) :
-    stateM(stateManager),
-    windowM(windowManager)
+#include "statemanager.h"
+#include "windowmanager.h"
+
+extern WindowManager *windowM;
+
+Renderer::Renderer()
 {
     // Init shader program
     shadowM = new ShaderManager();

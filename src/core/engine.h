@@ -15,6 +15,11 @@
 
 using namespace std::literals;
 
+extern InputManager *inputM;
+extern WindowManager *windowM;
+extern StateManager *stateM;
+extern Renderer *R;
+
 class Engine
 {
 public:
@@ -25,12 +30,8 @@ public:
 
     void run();
 
-protected:
     Camera *camera;
-    WindowManager *windowM;
-    InputManager *inputM;
-    StateManager *stateM;
-    Renderer *R;
+protected:
 private:
     const std::chrono::nanoseconds frametime = 16ms;
 

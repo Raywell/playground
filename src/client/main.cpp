@@ -1,7 +1,7 @@
-#include "level.h"
+#include "game.h"
 
 int main(int argc, char *argv[]) {
-    Level level;
-    level.run();
+    Game game;
+    game.run();
     return 0;
 }

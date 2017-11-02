@@ -1,7 +1,6 @@
 #include "inputmanager.h"
 
-InputManager::InputManager(WindowManager* wm) :
-    WM(wm)
+InputManager::InputManager()
 {
 }
 
@@ -9,21 +8,41 @@ InputManager::~InputManager() {
 }
 
 void InputManager::handleAllInput() {
-    glfwGetCursorPos(WM->getWindow(), &mouse_x_pos, &mouse_y_pos);
-    glfwSetCursorPos(WM->getWindow(), WM->width/2, WM->height/2);
+/*
+    camera->handleInput(*key, mouse_pos);
+*/
+}
 
-    for (std::vector<int>::iterator key = registeredKeys.begin() ; key != registeredKeys.end(); ++key) {
-        if(WM->getKeyState(*key) == GLFW_PRESS) {
-            camera->handleInput(*key);
-            switch (*key) {
-                case GLFW_KEY_ESCAPE:
-                    WM->closeWindow();
-                break;
-            }
-        }
+void InputManager::registerCallback(int key, int action, std::function<void(void)> callback) {
+    std::pair<int,int> key_action = std::make_pair(key,action);
+
+    auto callbacks_it = key_callbacks.find(key_action);
+    if (callbacks_it != key_callbacks.end()) {
+        callbacks_it->second.push_back(callback);
+    } else {
+        std::vector<std::function<void(void)>> key_functions;
+        key_functions.push_back(callback);
+        key_callbacks[key_action] = key_functions;
     }
+}
+
+void InputManager::setMousePos(double xpos, double ypos) {
+    mouse_pos.x = xpos;
+    mouse_pos.y = ypos;
 }
 
 void InputManager::registerCamera(Camera* c) {
     camera = c;
+}
+
+void InputManager::keyCallback(int key, int action)
+{
+    // Calling every callback associated with the couple KEY/ACTION
+    std::pair<int,int> key_action = std::make_pair(key,action);
+    auto key_functions = key_callbacks.find(key_action);
+    if (key_functions != key_callbacks.end()) {
+        for(auto const& callback : key_functions->second) {
+            callback();
+        }
+    }
 }

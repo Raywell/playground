@@ -10,12 +10,12 @@
 class Camera
 {
 public:
-    Camera(float _fov, float w_h_ratio);
+    Camera(float _fov, int Wwidth, int Wheight);
     virtual ~Camera();
     glm::mat4 getView();
     glm::mat4 getProjection();
-    void handleInput(int key);
 
+    void makeWASDEBindings(); // Temporary convenience
 protected:
 private:
     glm::vec3 c_pos; // Camera position
@@ -26,8 +26,18 @@ private:
     float speed;
     float fov; // In degrees
 
+    glm::vec2 mouse_offset;
+
     glm::mat4 projection;
     glm::mat4 view;
+
+    void updateView();
+
+    void lookAtCenter();
+    void moveForward();
+    void moveBackwards();
+    void moveLeft();
+    void moveRight();
 };
 
 #endif

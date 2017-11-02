@@ -2,34 +2,38 @@
 #define INPUTMANAGER_H
 
 #include <vector>
+#include <map>
+#include <functional>
+#include <utility>
+
 #include <GLFW/glfw3.h>
-#include "windowmanager.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/ext.hpp>
+
 #include "camera.h"
 
 class InputManager
 {
 public:
-    InputManager(WindowManager* wm);
+    InputManager();
     virtual ~InputManager();
 
     void handleAllInput();
-    void registerCamera(Camera* c);
+    void registerCallback(int key, int action, std::function<void(void)> callback);
+    void keyCallback(int key, int action);
+    void registerCamera(Camera* c); // TODO delete
+
+    void setMousePos(double xpos, double ypos);
 protected:
 private:
     Camera *camera = NULL;
-    WindowManager* WM;
-    std::vector<int> registeredKeys = {
-        GLFW_KEY_ESCAPE,
-        GLFW_KEY_W,
-        GLFW_KEY_A,
-        GLFW_KEY_S,
-        GLFW_KEY_D,
-        GLFW_KEY_E
-    };
+    
+    // Associate to a pair KEY/ACTION a callback function list
+    std::map<std::pair<int,int>, std::vector<std::function<void(void)>>> key_callbacks;
 
-    double mouse_speed;
-    double mouse_x_pos;
-    double mouse_y_pos;
+    glm::vec2 mouse_pos;
 };
 
 #endif

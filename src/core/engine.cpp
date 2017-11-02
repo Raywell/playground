@@ -6,25 +6,33 @@
 
 #include "engine.h"
 
+// Globals
+InputManager *inputM;
+WindowManager *windowM;
+StateManager *stateM;
+Renderer *R;
+
 using namespace std::literals::chrono_literals;
 
 Engine::Engine()
 {
     glfwInit();
 
+    inputM = new InputManager();
+
     windowM = new WindowManager(800,600);
     windowM->init();
 
     camera = new Camera(
         45.0f,
-        (float)windowM->width/(float)windowM->height
+        windowM->width,
+        windowM->height
     );
 
-    inputM = new InputManager(windowM);
     inputM->registerCamera(camera);
 
     stateM = new StateManager();
-    R = new Renderer(stateM, windowM);
+    R = new Renderer();
     R->camera = camera; // TODO : remove (move camera to statemanager)
 }
 
@@ -57,6 +65,7 @@ void Engine::loop() {
         time_start = clock::now();
         timelag += std::chrono::duration_cast<std::chrono::nanoseconds>(delta_time);
 
+        windowM->frameAction();
         inputM->handleAllInput();
 
         while (timelag >= frametime) {

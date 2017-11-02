@@ -5,14 +5,13 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "statemanager.h"
-#include "windowmanager.h"
 #include "shadermanager.h"
+#include "camera.h"
 
 class Renderer
 {
 public:
-    Renderer(StateManager *stateManager, WindowManager *windowManager);
+    Renderer();
     virtual ~Renderer();
 
     Camera *camera; // TODO : move camera to statemanager
@@ -20,8 +19,6 @@ public:
     void initData();
     void renderFrame(float alpha);
 protected:
-    StateManager *stateM;
-    WindowManager *windowM;
     ShaderManager *shadowM;
 
     glm::mat4 model;
