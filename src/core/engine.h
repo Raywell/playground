@@ -19,6 +19,7 @@ extern InputManager *inputM;
 extern WindowManager *windowM;
 extern StateManager *stateM;
 extern Renderer *R;
+extern Camera *camera;
 
 class Engine
 {
@@ -30,7 +31,6 @@ public:
 
     void run();
 
-    Camera *camera;
 protected:
 private:
     const std::chrono::nanoseconds frametime = 16ms;

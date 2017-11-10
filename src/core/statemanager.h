@@ -1,6 +1,8 @@
 #ifndef STATEMANAGER_H
 #define STATEMANAGER_H
 
+#include "scenegraph.h"
+
 class StateManager
 {
 public:
@@ -8,8 +10,9 @@ public:
     virtual ~StateManager();
 
     void init();
-    void update(); // Save current state. Calculate new state
+    void update();
 protected:
+    SceneGraph *sgraph;
 private:
 };
 

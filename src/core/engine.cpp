@@ -11,6 +11,7 @@ InputManager *inputM;
 WindowManager *windowM;
 StateManager *stateM;
 Renderer *R;
+Camera *camera;
 
 using namespace std::literals::chrono_literals;
 
