@@ -3,10 +3,16 @@
 
 ShaderManager::ShaderManager()
 {
-    ID = glCreateProgram();
 }
 
 ShaderManager::~ShaderManager() {
+}
+
+void ShaderManager::createProgram() {
+    ID = glCreateProgram();
+}
+
+void ShaderManager::deleteProgram() {
     glDeleteProgram(ID);
 }
 

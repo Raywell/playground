@@ -9,6 +9,10 @@ public:
     SceneGraph();
     virtual ~SceneGraph();
 
+    SceneNode* getRoot() {
+        return root;
+    }
+
     void init();
     void update();
 protected:

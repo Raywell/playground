@@ -10,13 +10,21 @@ extern WindowManager *windowM;
 Renderer::Renderer()
 {
     // Init shader program
-    shadowM = new ShaderManager();
+    shaderM = new ShaderManager();
 
     model = glm::mat4(); // Identity
 }
 
 Renderer::~Renderer() {
-    delete shadowM;
+    delete shaderM;
+}
+
+void Renderer::initShaderProgram() {
+    shaderM->createProgram();
+}
+
+void Renderer::endShaderProgram() {
+    shaderM->deleteProgram();
 }
 
 void Renderer::initData() {
@@ -28,7 +36,7 @@ void Renderer::initData() {
        { ShaderType::V, { VertexShader::getSource() } },
        { ShaderType::F, { FragmentShader::getSource() } }
     };
-    shadowM->compileShaders(shaders);
+    shaderM->compileShaders(shaders);
 
     // Test data
     // set up vertex data (and buffer(s)) and configure vertex attributes
@@ -155,11 +163,11 @@ void Renderer::renderFrame(float alpha) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Wireframe mode. To revert, set to GL_FILL
 
-    shadowM->use();
+    shaderM->use();
 
-    unsigned int modelLoc = glGetUniformLocation(shadowM->ID, "model");
-    unsigned int viewLoc = glGetUniformLocation(shadowM->ID, "view");
-    unsigned int projectionLoc = glGetUniformLocation(shadowM->ID, "projection");
+    unsigned int modelLoc = glGetUniformLocation(shaderM->ID, "model");
+    unsigned int viewLoc = glGetUniformLocation(shaderM->ID, "view");
+    unsigned int projectionLoc = glGetUniformLocation(shaderM->ID, "projection");
 
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera->getView()));

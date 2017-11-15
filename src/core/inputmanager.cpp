@@ -7,12 +7,6 @@ InputManager::InputManager()
 InputManager::~InputManager() {
 }
 
-void InputManager::handleAllInput() {
-/*
-    camera->handleInput(*key, mouse_pos);
-*/
-}
-
 void InputManager::registerCallback(int key, int action, std::function<void(void)> callback) {
     std::pair<int,int> key_action = std::make_pair(key,action);
 
@@ -29,10 +23,6 @@ void InputManager::registerCallback(int key, int action, std::function<void(void
 void InputManager::setMousePos(double xpos, double ypos) {
     mouse_pos.x = xpos;
     mouse_pos.y = ypos;
-}
-
-void InputManager::registerCamera(Camera* c) {
-    camera = c;
 }
 
 void InputManager::keyCallback(int key, int action)

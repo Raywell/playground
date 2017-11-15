@@ -5,49 +5,50 @@
 #include "windowmanager.h"
 
 #include "inputmanager.h"
+#include "renderer.h"
 
 std::vector<std::function<void(int,int)>> g_keyHandlers;
 
 extern InputManager *inputM;
+extern Renderer *R;
 
-WindowManager::WindowManager(int wRes, int hRes) :
-width(wRes),
-height(hRes)
+WindowManager::WindowManager()
 {
     using namespace std::placeholders;
     addKeyHandler(std::bind(&InputManager::keyCallback, inputM, _1, _2));
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
 WindowManager::~WindowManager() {
 }
 
-void WindowManager::init() {
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    bindCloseWindowKeyAction(GLFW_KEY_ESCAPE, GLFW_PRESS);
-
-    if (!this->createRenderingWindow()) {
-        throw std::runtime_error("Unable to create rendering window");
-    }
+void WindowManager::setWidthHeight(float _width, float _height) {
+    width = _width;
+    height = _height;
+    glfwSetWindowSize(window, width, height);
 }
 
-bool WindowManager::createRenderingWindow() {;
-    this->window = glfwCreateWindow(width, height, "Main Window", NULL, NULL);
+void WindowManager::createRenderingWindow(std::string window_title, float _width, float _height) {
+    width = _width;
+    height = _height;
+
+    this->window = glfwCreateWindow(width, height, window_title.c_str(), NULL, NULL);
     if (this->window == NULL)
     {
-        std::cout << "Failed to create GLFW this->window" << std::endl;
+        std::cerr << "Failed to create GLFW this->window" << std::endl;
         glfwTerminate();
-        return false;
+        throw std::runtime_error("Unable to create rendering window");
     }
     
     glfwMakeContextCurrent(this->window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return false;
+        std::cerr << "Failed to initialize GLAD" << std::endl;
+        throw std::runtime_error("Unable to create rendering window");
     }
 
     glViewport(0, 0, width, height);
@@ -66,7 +67,12 @@ bool WindowManager::createRenderingWindow() {;
     };
     glfwSetKeyCallback(window, key_callback);
 
-    return true;
+    R->initShaderProgram();
+}
+
+void WindowManager::closeWindow() {
+    R->endShaderProgram();
+    glfwSetWindowShouldClose(window, true);
 }
 
 bool WindowManager::windowShouldClose() {
@@ -86,6 +92,6 @@ void WindowManager::frameAction() {
 
 void WindowManager::bindCloseWindowKeyAction(int key, int action) {
     inputM->registerCallback(key, action, [this]() {
-        glfwSetWindowShouldClose(window, true);
+        closeWindow();
     });
 }

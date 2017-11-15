@@ -7,12 +7,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/ext.hpp>
 
-#include "scenenode.h"
+#include "scenegraph/scenenode.h"
 
 class Camera : public SceneNode
 {
 public:
-    Camera(float _fov, int Wwidth, int Wheight);
+    Camera(float _fov);
     virtual ~Camera();
 
     // Override

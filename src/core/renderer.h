@@ -14,12 +14,19 @@ public:
     Renderer();
     virtual ~Renderer();
 
-    Camera *camera; // TODO : move camera to statemanager
+    // TODO - move to statemanager ?
+    void registerCamera(Camera *_camera) {
+        camera = _camera;
+    }
+
+    void initShaderProgram();
+    void endShaderProgram();
 
     void initData();
     void renderFrame(float alpha);
 protected:
-    ShaderManager *shadowM;
+    ShaderManager *shaderM;
+    Camera *camera; // TODO : move camera to statemanager
 
     glm::mat4 model;
     bool createRenderingWindow();

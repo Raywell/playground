@@ -24,6 +24,9 @@ public:
     ShaderManager();
     ~ShaderManager();
 
+    void createProgram();
+    void deleteProgram();
+
     void compileShaders(std::map<ShaderType, std::vector<std::string>> shadersSrc);
     void use();
 

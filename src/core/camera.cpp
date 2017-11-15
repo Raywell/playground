@@ -2,10 +2,12 @@
 #include "camera.h"
 
 #include "inputmanager.h"
+#include "windowmanager.h"
 
 extern InputManager *inputM;
+extern WindowManager *windowM;
 
-Camera::Camera(float _fov, int Wwidth, int Wheight) :
+Camera::Camera(float _fov) :
     SceneNode("camera"),
     c_pos(glm::vec3(0.0f, 0.0f, 3.0f)),
     target(glm::vec3(0.0f, 0.0f, 0.0f)),
@@ -15,8 +17,10 @@ Camera::Camera(float _fov, int Wwidth, int Wheight) :
     speed(0.1f),
     fov(_fov)
 {
-    mouse_offset = glm::vec2((float)Wwidth / 2, (float)Wheight / 2);
-    projection = glm::perspective(glm::radians(fov), (float)Wwidth/(float)Wheight, 0.1f, 100.0f);
+    float width = windowM->getWidth();
+    float height = windowM->getHeight();
+    mouse_offset = glm::vec2((float)width / 2, (float)height / 2);
+    projection = glm::perspective(glm::radians(fov), (float)width/(float)height, 0.1f, 100.0f);
     view = glm::lookAt(c_pos, target, up);
 
     makeWASDEBindings();

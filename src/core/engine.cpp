@@ -11,7 +11,6 @@ InputManager *inputM;
 WindowManager *windowM;
 StateManager *stateM;
 Renderer *R;
-Camera *camera;
 
 using namespace std::literals::chrono_literals;
 
@@ -21,25 +20,14 @@ Engine::Engine()
 
     inputM = new InputManager();
 
-    windowM = new WindowManager(800,600);
-    windowM->init();
-
-    camera = new Camera(
-        45.0f,
-        windowM->width,
-        windowM->height
-    );
-
-    inputM->registerCamera(camera);
+    windowM = new WindowManager();
 
     stateM = new StateManager();
     R = new Renderer();
-    R->camera = camera; // TODO : remove (move camera to statemanager)
 }
 
 Engine::~Engine() {
     delete inputM;
-    delete camera;
     delete windowM;
     delete stateM;
     delete R;
@@ -47,7 +35,7 @@ Engine::~Engine() {
 }
 
 void Engine::run() {
-    R->initData();
+    R->initData(); // TODO remove
     stateM->init();
 
     loop();
@@ -67,7 +55,6 @@ void Engine::loop() {
         timelag += std::chrono::duration_cast<std::chrono::nanoseconds>(delta_time);
 
         windowM->frameAction();
-        inputM->handleAllInput();
 
         while (timelag >= frametime) {
             timelag -= frametime;

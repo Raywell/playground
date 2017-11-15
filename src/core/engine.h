@@ -19,7 +19,6 @@ extern InputManager *inputM;
 extern WindowManager *windowM;
 extern StateManager *stateM;
 extern Renderer *R;
-extern Camera *camera;
 
 class Engine
 {
@@ -28,6 +27,18 @@ public:
 
     Engine();
     virtual ~Engine();
+
+    StateManager* getStateManager() {
+        return stateM;
+    }
+
+    WindowManager* getWindowManager() {
+        return windowM;
+    }
+
+    Renderer* getRenderer() {
+        return R;
+    }
 
     void run();
 
