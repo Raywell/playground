@@ -7,7 +7,10 @@ class SceneGraph
 {
 public:
     SceneGraph();
-    virtual ~SceneGraph();
+    virtual ~SceneGraph() { destroy(); }
+
+    void destroy();
+    void release() { delete this; }
 
     SceneNode* getRoot() {
         return root;
@@ -15,6 +18,9 @@ public:
 
     void init();
     void update();
+
+    void debug_printGraphObjects();
+
 protected:
 private:
     SceneNode *root;

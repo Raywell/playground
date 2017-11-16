@@ -6,7 +6,7 @@ StateManager::StateManager()
 }
 
 StateManager::~StateManager() {
-    delete sgraph;
+    sgraph->release();
 }
 
 void StateManager::init() {

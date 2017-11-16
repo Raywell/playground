@@ -5,7 +5,6 @@
 #include <functional>
 
 #include <GLFW/glfw3.h>
-#include "camera.h"
 
 // Globals
 extern std::vector<std::function<void(int,int)>> g_keyHandlers;

@@ -8,7 +8,6 @@
 #include <GLFW/glfw3.h>
 
 #include "windowmanager.h"
-#include "camera.h"
 #include "inputmanager.h"
 #include "renderer.h"
 #include "statemanager.h"
@@ -27,6 +26,8 @@ public:
 
     Engine();
     virtual ~Engine();
+
+    void release() { delete this; }
 
     StateManager* getStateManager() {
         return stateM;

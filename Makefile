@@ -1,6 +1,7 @@
 BIN = bin
 SRC = src
-OBJECTS_CORE = engine.o inputmanager.o camera.o statemanager.o renderer.o shadermanager.o windowmanager.o scenegraph/scenegraph.o scenegraph/scenenode.o glad.o
+OBJECTS_CORE = glad.o engine.o inputmanager.o camera.o statemanager.o renderer.o shadermanager.o windowmanager.o \
+				scenegraph/scenegraph.o scenegraph/scenenode.o scenegraph/scenenodegeometry.o scenegraph/scenenodetransform.o
 DIRECTORIES = scenegraph
 OBJECTS_CLIENT = main.o game.o 
 
