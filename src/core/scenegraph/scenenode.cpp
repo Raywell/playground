@@ -1,38 +1,28 @@
 #include "scenenode.h"
 #include <iostream>
 
-SceneNode::SceneNode(std::string name, int level) :
-name(name),
-level(level)
+SceneNode::SceneNode(std::string name) :
+name(name)
 {
 }
 
-void SceneNode::update() {
+void SceneNode::updateSelf() {
+}
+
+void SceneNode::updateAll() {
+    updateSelf();
+
     for(auto const& child : children) {
-        child->update();
+        child->updateAll();
     }
 }
 
 void SceneNode::addChild(SceneNode* new_child) {
     new_child->setParent(this);
-    new_child->setLevel(level+1);
     children.push_back(new_child);
 }
 
-void SceneNode::setLevel(int new_level) {
-    int diff = new_level - level;
-    addLevel(diff);
-}
-
-void SceneNode::addLevel(int diff) {
-    level += diff;
-
-    for (auto i = children.begin(); i != children.end(); i++ ) {
-        (*i)->addLevel(diff);
-    }
-}
-
-void SceneNode::debug_printObject() {
+void SceneNode::debug_printObject(int level) {
     std::string prefix(level, ' ');
 
     std::cout << prefix << level << "." << name;
@@ -40,7 +30,7 @@ void SceneNode::debug_printObject() {
     if (!children.empty()) {
         std::cout << " {" << std::endl;
         for (auto i = children.begin(); i != children.end(); i++ ) {
-            (*i)->debug_printObject();
+            (*i)->debug_printObject(level+1);
         }
         std::cout << prefix << "}" << std::endl;
     } else {

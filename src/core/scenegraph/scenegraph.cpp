@@ -14,7 +14,7 @@ void SceneGraph::init() {
 
 void SceneGraph::update() {
     // Update all nodes
-    root->update();
+    root->updateAll();
 }
 
 void SceneGraph::debug_printGraphObjects() {

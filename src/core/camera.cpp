@@ -69,7 +69,7 @@ void Camera::makeWASDEBindings() {
 }
 
 /* Called every frame */
-void Camera::update() {
+void Camera::updateSelf() {
     c_pos += speed * front * movement.y;
     c_pos += glm::normalize(glm::cross(front, up)) * speed * movement.x;
 }

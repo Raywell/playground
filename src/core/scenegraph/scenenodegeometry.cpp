@@ -6,9 +6,5 @@ SceneNode(name)
 {
 }
 
-void SceneNodeGeometry::update() {
-    // Update self
-
-    // Update default
-    SceneNode::update();
+void SceneNodeGeometry::updateSelf() {
 }

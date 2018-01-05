@@ -24,7 +24,8 @@ void Game::run() {
     // Building scenegraph
     root->addChild(camera); // Adding camera to root
 
-    sGraph->debug_printGraphObjects(); // DEBUG : Printing names of objects in grap
+    // DEBUG : Printing names of objects in graph
+    sGraph->debug_printGraphObjects();
 
     engine->run();
 

@@ -16,7 +16,7 @@ public:
     virtual ~Camera();
 
     // Override
-    void update();
+    void updateSelf();
 
     glm::mat4 getView();
     glm::mat4 getProjection();
