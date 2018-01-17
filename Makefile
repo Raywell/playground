@@ -1,8 +1,9 @@
 BIN = bin
 SRC = src
 OBJECTS_CORE = glad.o engine.o inputmanager.o camera.o statemanager.o renderer.o shadermanager.o windowmanager.o \
+				assets/asset.o assets/mesh.o assets/geometry.o \
 				scenegraph/scenegraph.o scenegraph/scenenode.o scenegraph/scenenodegeometry.o
-DIRECTORIES = scenegraph
+DIRECTORIES = assets scenegraph
 OBJECTS_CLIENT = main.o game.o 
 
 MKDIR_P = mkdir -p

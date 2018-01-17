@@ -5,7 +5,7 @@
 #include <string>
 
 #include "scenenode.h"
-#include "mesh.h"
+#include "../assets/geometry.h"
 
 class SceneNodeGeometry : public SceneNode
 {
@@ -15,18 +15,18 @@ public:
 
     void updateSelf();
 
-    void setMesh(Mesh *_mesh) { mesh = _mesh; }
-    void setPitch(glm::vec3 _pitch) { pitch = _pitch; }
-    void setYaw(glm::vec3 _yaw) { yaw = _yaw; }
-    void setRoll(glm::vec3 _roll) { roll = _roll; }
+    void setGeometry(Geometry *_geometry);
+    void setPitch(glm::vec3 _pitch);
+    void setYaw(glm::vec3 _yaw);
+    void setRoll(glm::vec3 _roll);
 
-    Mesh* getMesh() { return mesh; }
+    Geometry* getGeometry() { return geometry; }
     glm::vec3 getPitch() { return pitch; }
     glm::vec3 getYaw() { return yaw; }
     glm::vec3 getRoll() { return roll; }
 
 protected:
-    Mesh *mesh;
+    Geometry *geometry;
     glm::vec3 pitch;
     glm::vec3 yaw;
     glm::vec3 roll;

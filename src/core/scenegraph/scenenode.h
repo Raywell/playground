@@ -33,12 +33,19 @@ public:
         pos = p_pos;
     }
 
+    std::string getName() { return name; }
+    void setName(std::string _name) { name = _name; }
+
+    // Every cycle, only changed items are processed
+    void setChanged() { has_changed = true; }
+
     virtual void debug_printObject(int level = 0);
 
 protected:
     std::string name;
     SceneNode* parent;
     std::list<SceneNode*> children;
+    bool has_changed;
 
     glm::mat4 transform;
     glm::vec3 pos;

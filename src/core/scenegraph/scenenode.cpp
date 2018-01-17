@@ -1,8 +1,8 @@
 #include "scenenode.h"
 #include <iostream>
 
-SceneNode::SceneNode(std::string name) :
-name(name)
+SceneNode::SceneNode(std::string _name) :
+name(_name)
 {
 }
 
@@ -10,7 +10,10 @@ void SceneNode::updateSelf() {
 }
 
 void SceneNode::updateAll() {
-    updateSelf();
+    if (has_changed) {
+        updateSelf();
+        has_changed = false;
+    }
 
     for(auto const& child : children) {
         child->updateAll();
