@@ -5,7 +5,7 @@
 #include "asset.h"
 #include "mesh.h"
 
-class Geometry : Asset
+class Geometry : public Asset
 {
 public:
     explicit Geometry(std::string name);
@@ -17,8 +17,6 @@ public:
 protected:
     Mesh* mesh;
 private:
-    void destroy() {
-    }
 };
 
 #endif

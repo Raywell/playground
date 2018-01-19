@@ -5,10 +5,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <ireleasable.h>
 #include "shadermanager.h"
 #include "camera.h"
 
-class Renderer
+class Renderer : public IReleasable
 {
 public:
     Renderer();

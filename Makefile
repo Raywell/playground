@@ -1,9 +1,10 @@
 BIN = bin
 SRC = src
 OBJECTS_CORE = glad.o engine.o inputmanager.o camera.o statemanager.o renderer.o shadermanager.o windowmanager.o \
+				interfaces/ireleasable.o \
 				assets/asset.o assets/mesh.o assets/geometry.o \
 				scenegraph/scenegraph.o scenegraph/scenenode.o scenegraph/scenenodegeometry.o
-DIRECTORIES = assets scenegraph
+DIRECTORIES = interfaces assets scenegraph
 OBJECTS_CLIENT = main.o game.o 
 
 MKDIR_P = mkdir -p
@@ -13,7 +14,7 @@ CXXFLAGS = -Wall -m64 -std=c++14
 # The code compiler to use for compilation
 CC = g++
 
-INC = -I/usr/local/include -Ilibs/glfw-3.2.1/include -Ilibs/glm -Ilibs/glad/include -Isrc
+INC = -I/usr/local/include -Ilibs/glfw-3.2.1/include -Ilibs/glm -Ilibs/glad/include -Isrc -Isrc/core/interfaces
 LIB = -L/usr/lib64/ -L/usr/local/lib64/
 DEPS = -lglfw3 -lGL -pthread -lXrandr -lXxf86vm -lXi -lXinerama -lX11 -ldl -lXcursor
 

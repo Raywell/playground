@@ -12,7 +12,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/ext.hpp>
 
-class InputManager
+#include <ireleasable.h>
+
+class InputManager : public IReleasable
 {
 public:
     InputManager();

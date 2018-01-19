@@ -2,8 +2,18 @@
 #include <iostream>
 
 SceneNode::SceneNode(std::string _name) :
-name(_name)
+name(_name),
+children({}),
+has_changed(true)
 {
+}
+
+void SceneNode::destroy() {
+    for (auto i = children.begin(); i != children.end(); i++ ) {
+        (*i)->release();
+    }
+  
+    children.clear();
 }
 
 void SceneNode::updateSelf() {

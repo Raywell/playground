@@ -7,7 +7,7 @@ class Game
 {
 public:
     Game();
-    ~Game();
+    virtual ~Game();
     void run();
 
     void addDonut(SceneNode *node);

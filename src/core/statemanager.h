@@ -1,22 +1,18 @@
 #ifndef STATEMANAGER_H
 #define STATEMANAGER_H
 
+#include <ireleasable.h>
 #include "scenegraph/scenegraph.h"
 
-class StateManager
+class StateManager : public IReleasable
 {
 public:
     StateManager();
-    virtual ~StateManager();
-
-    SceneGraph* getSceneGraph() {
-        return sgraph;
-    }
+    virtual ~StateManager() {};
 
     void init();
     void update();
 protected:
-    SceneGraph *sgraph;
 private:
 };
 

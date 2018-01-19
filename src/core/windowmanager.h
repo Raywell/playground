@@ -6,10 +6,12 @@
 
 #include <GLFW/glfw3.h>
 
+#include <ireleasable.h>
+
 // Globals
 extern std::vector<std::function<void(int,int)>> g_keyHandlers;
 
-class WindowManager
+class WindowManager : public IReleasable
 {
 public:
     WindowManager();

@@ -3,13 +3,13 @@
 
 #include <string>
 
-class Asset
+#include <ireleasable.h>
+
+class Asset : public IReleasable
 {
 public:
     explicit Asset(std::string name);
     virtual ~Asset() = 0;
-
-    void release() { delete this; }
 
 protected:
     std::string name;

@@ -9,15 +9,14 @@
 
 #include "asset.h"
 
-class Mesh : Asset
+class Mesh : public Asset
 {
 public:
     explicit Mesh(std::string name);
+    virtual ~Mesh() {};
 
-    virtual ~Mesh() { destroy(); }
-
-    std::vector<glm::vec3> getVertices() { return vertices; }
-    void setVertices(std::vector<glm::vec3> _vertices) { vertices = _vertices; }
+    std::vector<float> getVertices() { return vertices; }
+    void setVertices(std::vector<float> _vertices) { vertices = _vertices; }
 
     std::vector<GLuint> getIndices() { return indices; }
     void setIndices(std::vector<GLuint> _indices) { indices = _indices; }
@@ -29,7 +28,7 @@ protected:
     size_t startIndex;
     size_t numIndices;
 
-    std::vector<glm::vec3> vertices;
+    std::vector<float> vertices;
     std::vector<GLuint> indices;
 
 private:

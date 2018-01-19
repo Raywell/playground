@@ -22,8 +22,7 @@ void Game::run() {
     Renderer *R = engine->getRenderer();
     R->registerCamera(camera); // Registering Camera // TODO put inside the scenegraph ?
 
-    StateManager *stateM = engine->getStateManager();
-    SceneGraph *sGraph = stateM->getSceneGraph();
+    SceneGraph *sGraph = engine->getSceneGraph();
     SceneNode *root = sGraph->getRoot();
 
     // Building scenegraph
@@ -33,6 +32,9 @@ void Game::run() {
     sGraph->debug_printGraphObjects();
 
     engine->run();
+
+    // Cleanup
+    camera->release();
 }
 
 void Game::addDonut(SceneNode *node) {
@@ -48,7 +50,43 @@ void Game::addDonut(SceneNode *node) {
     float dB = 0.424f;
     float dS = 0.141f;
     float d = 0.2f;
-    std::vector<glm::vec3> verticesChrys;
+    std::vector<float> verticesChrys = {
+        -sB,    z,      d,
+        -sS,    z,      d,
+        -dB,    dB,     d,
+        -dS,    dS,     d,
+        z,      sB,     d,
+        z,      sS,     d,
+        dB,     dB,     d,
+        dS,     dS,     d,
+        sB,     z,      d,
+        sS,     z,      d,
+        dB,     -dB,    d,
+        dS,     -dS,    d,
+        z,      -sB,    d,
+        z,      -sS,    d,
+        -dB,    -dB,    d,
+        -dS,    -dS,    d,
+
+        -sB,    z,      -d,
+        -sS,    z,      -d,
+        -dB,    dB,     -d,
+        -dS,    dS,     -d,
+        z,      sB,     -d,
+        z,      sS,     -d,
+        dB,     dB,     -d,
+        dS,     dS,     -d,
+        sB,     z,      -d,
+        sS,     z,      -d,
+        dB,     -dB,    -d,
+        dS,     -dS,    -d,
+        z,      -sB,    -d,
+        z,      -sS,    -d,
+        -dB,    -dB,    -d,
+        -dS,    -dS,    -d
+    };
+
+/*
     verticesChrys.push_back(glm::vec3(-sB,    z,      d));
     verticesChrys.push_back(glm::vec3(-sS,    z,      d));
     verticesChrys.push_back(glm::vec3(-dB,    dB,     d));
@@ -82,6 +120,7 @@ void Game::addDonut(SceneNode *node) {
     verticesChrys.push_back(glm::vec3(z,      -sS,    -d));
     verticesChrys.push_back(glm::vec3(-dB,    -dB,    -d));
     verticesChrys.push_back(glm::vec3(-dS,    -dS,    -d));
+*/
 
     const unsigned int nTr = 16*4; // 2 faces and outer&inner fill
     const unsigned int nVert = 16*2;
@@ -133,4 +172,6 @@ void Game::addDonut(SceneNode *node) {
 
     donut_mesh->setVertices(verticesChrys);
     donut_mesh->setIndices(indicesChrys);
+
+    donut_mesh->release();
 }

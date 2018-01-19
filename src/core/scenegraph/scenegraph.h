@@ -1,16 +1,14 @@
 #ifndef SCENEGRAPH_H
 #define SCENEGRAPH_H
 
+#include <ireleasable.h>
 #include "scenenode.h"
 
-class SceneGraph
+class SceneGraph : public IReleasable
 {
 public:
     SceneGraph();
     virtual ~SceneGraph() { destroy(); }
-
-    void destroy();
-    void release() { delete this; }
 
     SceneNode* getRoot() {
         return root;
@@ -22,6 +20,7 @@ public:
     void debug_printGraphObjects();
 
 protected:
+    void destroy();
 private:
     SceneNode *root;
 };

@@ -11,6 +11,7 @@ InputManager *inputM;
 WindowManager *windowM;
 StateManager *stateM;
 Renderer *R;
+SceneGraph *sceneGraph;
 
 using namespace std::literals::chrono_literals;
 
@@ -19,18 +20,18 @@ Engine::Engine()
     glfwInit();
 
     inputM = new InputManager();
-
     windowM = new WindowManager();
-
     stateM = new StateManager();
     R = new Renderer();
+    sceneGraph = new SceneGraph();
 }
 
 Engine::~Engine() {
-    delete inputM;
-    delete windowM;
-    delete stateM;
-    delete R;
+    sceneGraph->release();
+    R->release();
+    stateM->release();
+    windowM->release();
+    inputM->release();
     glfwTerminate();
 }
 
