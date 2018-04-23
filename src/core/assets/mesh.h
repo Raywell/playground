@@ -9,11 +9,14 @@
 
 #include "asset.h"
 
-class Mesh : public Asset
+class Mesh : public Asset, public IBufferObject
 {
 public:
     explicit Mesh(std::string name);
     virtual ~Mesh() {};
+
+    void load();
+    void unload();
 
     std::vector<float> getVertices() { return vertices; }
     void setVertices(std::vector<float> _vertices) { vertices = _vertices; }
@@ -32,7 +35,7 @@ protected:
     std::vector<GLuint> indices;
 
 private:
-    void destroy() { }
+    void destroy() {}
 };
 
 #endif

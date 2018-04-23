@@ -9,7 +9,10 @@ class Geometry : public Asset
 {
 public:
     explicit Geometry(std::string name);
-    virtual ~Geometry() { destroy(); }
+    virtual ~Geometry() {}
+
+    void load();
+    void unload();
 
     void setMesh(Mesh *_mesh) { mesh = _mesh; }
     Mesh* getMesh() { return mesh; }

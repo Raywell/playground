@@ -31,7 +31,7 @@ protected:
 
     glm::mat4 model;
     bool createRenderingWindow();
-    unsigned int VAO = 0;
+    unsigned int VAO = 0; // TODO : move to buffermanager
 };
 
 #endif

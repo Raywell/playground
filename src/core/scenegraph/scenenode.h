@@ -17,6 +17,9 @@ public:
     explicit SceneNode(std::string name);
     virtual ~SceneNode() {};
 
+    virtual void loadSelf();
+    void loadAll();
+
     virtual void updateSelf();
     void updateAll();
     void addChild(SceneNode* new_child);
@@ -37,7 +40,9 @@ public:
     void setName(std::string _name) { name = _name; }
 
     // Every cycle, only changed items are processed
-    void setChanged() { has_changed = true; }
+    void setUpdatedFlg() { update_required = true; }
+
+    void setLoadFlg() { load_required = true; }
 
     virtual void debug_printObject(int level = 0);
 
@@ -47,7 +52,8 @@ protected:
     std::string name;
     SceneNode* parent;
     std::list<SceneNode*> children;
-    bool has_changed;
+    bool update_required;
+    bool load_required;
 
     glm::mat4 transform;
     glm::vec3 pos;

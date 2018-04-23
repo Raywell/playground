@@ -9,7 +9,8 @@ void SceneGraph::destroy() {
     root->release();
 }
 
-void SceneGraph::init() {
+void SceneGraph::load() {
+    root->loadAll();
 }
 
 void SceneGraph::update() {

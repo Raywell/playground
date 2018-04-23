@@ -2,44 +2,49 @@
 #include <vector>
 #include "game.h"
 
+Engine *E = NULL;
+
 Game::Game() {
-    engine = new Engine(); // Creating Engine
+    E = new Engine(); // Creating Engine
 }
 
 Game::~Game() {
-    engine->release();
+    E->release();
 }
 
 void Game::run() {
 
-    WindowManager *windowM = engine->getWindowManager();
+    WindowManager *windowM = E->getWindowManager();
 
-    windowM->createRenderingWindow("My Game",800,600); // Create Window
+    windowM->createRenderingWindow("Playground",800,600); // Create Window
     windowM->bindCloseWindowKeyAction(GLFW_KEY_ESCAPE, GLFW_PRESS); // Close button binding
 
     Camera *camera = new Camera(45.0f); // Creating Camera
 
-    Renderer *R = engine->getRenderer();
+    Renderer *R = E->getRenderer();
     R->registerCamera(camera); // Registering Camera // TODO put inside the scenegraph ?
 
-    SceneGraph *sGraph = engine->getSceneGraph();
+    SceneGraph *sGraph = E->getSceneGraph();
     SceneNode *root = sGraph->getRoot();
+
+    E->run();
 
     // Building scenegraph
     root->addChild(camera); // Adding camera to root
+    addDonut(root);
 
     // DEBUG : Printing names of objects in graph
     sGraph->debug_printGraphObjects();
-
-    engine->run();
 
     // Cleanup
     camera->release();
 }
 
 void Game::addDonut(SceneNode *node) {
+    RM = E->getResourceManager();
+    
     // Assets should go on heap
-    Mesh *donut_mesh = new Mesh("donut");
+    Mesh *donut_mesh = RM->registerAsset<Mesh>("donut");
 
     // Test data
     // set up vertex data (and buffer(s)) and configure vertex attributes
@@ -173,5 +178,9 @@ void Game::addDonut(SceneNode *node) {
     donut_mesh->setVertices(verticesChrys);
     donut_mesh->setIndices(indicesChrys);
 
-    donut_mesh->release();
+    Geometry *donut_g = new Geometry("DonutGeom"); // TODO : AssetManager
+    donut_g->setMesh(donut_mesh);
+    node->addChild(donut_g);
+
+    //donut_mesh->release(); // TODO
 }

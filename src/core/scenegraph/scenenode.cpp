@@ -4,7 +4,8 @@
 SceneNode::SceneNode(std::string _name) :
 name(_name),
 children({}),
-has_changed(true)
+update_required(true),
+load_required(false)
 {
 }
 
@@ -19,10 +20,21 @@ void SceneNode::destroy() {
 void SceneNode::updateSelf() {
 }
 
+void SceneNode::loadAll() {
+    if (load_required) {
+        loadSelf();
+        load_required = false;
+    }
+
+    for(auto const& child : children) {
+        child->loadAll();
+    }
+}
+
 void SceneNode::updateAll() {
-    if (has_changed) {
+    if (update_required) {
         updateSelf();
-        has_changed = false;
+        update_required = false;
     }
 
     for(auto const& child : children) {

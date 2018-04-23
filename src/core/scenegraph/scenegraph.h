@@ -14,7 +14,7 @@ public:
         return root;
     }
 
-    void init();
+    void load();
     void update();
 
     void debug_printGraphObjects();

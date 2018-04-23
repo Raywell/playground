@@ -6,12 +6,14 @@
 
 #include "engine.h"
 
-// Globals
-InputManager *inputM;
-WindowManager *windowM;
-StateManager *stateM;
-Renderer *R;
-SceneGraph *sceneGraph;
+// Managers as globals
+InputManager *inputM = NULL;
+WindowManager *windowM = NULL;
+StateManager *stateM = NULL;
+Renderer *R = NULL;
+SceneGraph *sceneGraph = NULL;
+AssetManager *assetM = NULL;
+BufferManager *bufferM = NULL;
 
 using namespace std::literals::chrono_literals;
 
@@ -24,9 +26,13 @@ Engine::Engine()
     stateM = new StateManager();
     R = new Renderer();
     sceneGraph = new SceneGraph();
+    assetM = new AssetManager();
+    bufferM = new BufferManager();
 }
 
 Engine::~Engine() {
+    bufferM->release();
+    assetM->release();
     sceneGraph->release();
     R->release();
     stateM->release();

@@ -13,7 +13,6 @@ public:
     void addDonut(SceneNode *node);
 
 protected:
-    Engine *engine;
 };
 
 #endif

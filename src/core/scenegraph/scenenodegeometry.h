@@ -13,6 +13,7 @@ public:
     explicit SceneNodeGeometry(std::string name);
     virtual ~SceneNodeGeometry() { };
 
+    void loadSelf();
     void updateSelf();
 
     void setGeometry(Geometry *_geometry);
