@@ -6,13 +6,16 @@
 
 #include "inputmanager.h"
 #include "renderer.h"
+#include "engine.h"
 
 std::vector<std::function<void(int,int)>> g_keyHandlers;
 
 extern InputManager *inputM;
 extern Renderer *R;
+extern ShaderManager *shaderM;
 
-WindowManager::WindowManager()
+WindowManager::WindowManager(Engine* _E) :
+E(_E)
 {
     using namespace std::placeholders;
     addKeyHandler(std::bind(&InputManager::keyCallback, inputM, _1, _2));
@@ -38,7 +41,7 @@ void WindowManager::createRenderingWindow(std::string window_title, float _width
     this->window = glfwCreateWindow(width, height, window_title.c_str(), NULL, NULL);
     if (this->window == NULL)
     {
-        std::cerr << "Failed to create GLFW this->window" << std::endl;
+        std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         throw std::runtime_error("Unable to create rendering window");
     }
@@ -67,11 +70,12 @@ void WindowManager::createRenderingWindow(std::string window_title, float _width
     };
     glfwSetKeyCallback(window, key_callback);
 
-    R->initShaderProgram();
+    glEnable(GL_DEPTH_TEST);
+    E->initOnWindowCreation();
 }
 
 void WindowManager::closeWindow() {
-    R->endShaderProgram();
+    shaderM->deleteProgram();
     glfwSetWindowShouldClose(window, true);
 }
 

@@ -2,7 +2,8 @@ BIN = bin
 SRC = src
 OBJECTS_CORE = glad.o engine.o inputmanager.o camera.o statemanager.o renderer.o shadermanager.o windowmanager.o \
 				interfaces/ireleasable.o \
-				assets/asset.o assets/mesh.o assets/geometry.o \
+				bufferobjectmanager.o \
+				assetmanager.o assets/asset.o assets/mesh.o assets/geometry.o \
 				scenegraph/scenegraph.o scenegraph/scenenode.o scenegraph/scenenodegeometry.o
 DIRECTORIES = interfaces assets scenegraph
 OBJECTS_CLIENT = main.o game.o 
@@ -10,7 +11,7 @@ OBJECTS_CLIENT = main.o game.o
 MKDIR_P = mkdir -p
 
 # The flags to use for compilation
-CXXFLAGS = -Wall -m64 -std=c++14
+CXXFLAGS = -Wall -m64 -std=c++14 -g -O0
 # The code compiler to use for compilation
 CC = g++
 
@@ -29,7 +30,7 @@ LIST_CLIENT=$(addprefix $(BIN)/, $(OBJECTS_CLIENT))
 #######################################
 all: directories $(BIN)/client.exe
 
-$(BIN)/client.exe: $(LIST_CLIENT) $(BIN)/core.o
+$(BIN)/client.exe: $(BIN)/core.o $(LIST_CLIENT)
 	$(CC) $(CXXFLAGS) -o $@ $^ $(INC) $(LIB) $(DEPS)
 #######################################
 # Core build

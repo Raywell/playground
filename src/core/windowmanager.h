@@ -11,10 +11,12 @@
 // Globals
 extern std::vector<std::function<void(int,int)>> g_keyHandlers;
 
+class Engine;
+
 class WindowManager : public IReleasable
 {
 public:
-    WindowManager();
+    WindowManager(Engine* _E);
     virtual ~WindowManager();
 
     GLFWwindow* getWindow() { return window; }
@@ -33,6 +35,7 @@ public:
     int getHeight() { return height; }
     void setWidthHeight(float _width, float _height);
 protected:
+    Engine *E;
 private:
     GLFWwindow *window = NULL;
     int width;

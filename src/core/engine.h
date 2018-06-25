@@ -13,7 +13,8 @@
 #include "renderer.h"
 #include "statemanager.h"
 #include "assetmanager.h"
-#include "buffermanager.h"
+#include "bufferobjectmanager.h"
+#include "shadermanager.h"
 
 using namespace std::literals;
 
@@ -23,7 +24,8 @@ extern StateManager *stateM;
 extern Renderer *R;
 extern SceneGraph *sceneGraph;
 extern AssetManager *assetM;
-extern BufferManager *bufferM;
+extern BufferObjectManager *bufferObjectM;
+extern ShaderManager *shaderM;
 
 class Engine : public IReleasable
 {
@@ -57,10 +59,15 @@ public:
         return assetM;
     }
 
-    BufferManager* getBufferManager() {
-        return bufferM;
+    BufferObjectManager* getBufferObjectManager() {
+        return bufferObjectM;
     }
 
+    ShaderManager* getShaderManager() {
+        return shaderM;
+    }
+
+    void initOnWindowCreation();
     void run();
 
 protected:

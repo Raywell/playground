@@ -3,6 +3,7 @@
 
 #include <ireleasable.h>
 #include "scenenode.h"
+#include "scenenodegeometry.h"
 
 class SceneGraph : public IReleasable
 {

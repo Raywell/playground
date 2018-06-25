@@ -20,18 +20,12 @@ public:
         camera = _camera;
     }
 
-    void initShaderProgram();
-    void endShaderProgram();
-
-    void initData();
+    void init();
     void renderFrame(float alpha);
 protected:
-    ShaderManager *shaderM;
     Camera *camera; // TODO : move camera to statemanager
 
     glm::mat4 model;
-    bool createRenderingWindow();
-    unsigned int VAO = 0; // TODO : move to buffermanager
 };
 
 #endif

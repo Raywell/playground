@@ -17,9 +17,6 @@ void SceneNode::destroy() {
     children.clear();
 }
 
-void SceneNode::updateSelf() {
-}
-
 void SceneNode::loadAll() {
     if (load_required) {
         loadSelf();
@@ -32,7 +29,7 @@ void SceneNode::loadAll() {
 }
 
 void SceneNode::updateAll() {
-    if (update_required) {
+    if (always_update || update_required) {
         updateSelf();
         update_required = false;
     }
@@ -44,6 +41,7 @@ void SceneNode::updateAll() {
 
 void SceneNode::addChild(SceneNode* new_child) {
     new_child->setParent(this);
+    new_child->setLoadFlg();
     children.push_back(new_child);
 }
 

@@ -11,6 +11,9 @@
 #include <vector>
 #include <map>
 
+#include "shaders/vertexshader.h"
+#include "shaders/fragmentshader.h"
+
 enum class ShaderType {
     V,
     F,

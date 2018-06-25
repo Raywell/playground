@@ -17,10 +17,10 @@ public:
     explicit SceneNode(std::string name);
     virtual ~SceneNode() {};
 
-    virtual void loadSelf();
-    void loadAll();
+    virtual void loadSelf() {};
+    virtual void updateSelf() {};
 
-    virtual void updateSelf();
+    void loadAll();
     void updateAll();
     void addChild(SceneNode* new_child);
 
@@ -53,6 +53,7 @@ protected:
     SceneNode* parent;
     std::list<SceneNode*> children;
     bool update_required;
+    bool always_update = false; // Some nodes may want to handle update themselves
     bool load_required;
 
     glm::mat4 transform;

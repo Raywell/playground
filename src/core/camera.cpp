@@ -17,6 +17,8 @@ Camera::Camera(float _fov) :
     speed(0.1f),
     fov(_fov)
 {
+    always_update = true;
+
     float width = windowM->getWidth();
     float height = windowM->getHeight();
     mouse_offset = glm::vec2((float)width / 2, (float)height / 2);
@@ -29,8 +31,10 @@ Camera::Camera(float _fov) :
 Camera::~Camera() {
 }
 
+void Camera::loadSelf() {
+}
+
 glm::mat4 Camera::getView() {
-    updateView(); // TODO - move elsewhere
     return view;
 }
 
@@ -72,6 +76,8 @@ void Camera::makeWASDEBindings() {
 void Camera::updateSelf() {
     c_pos += speed * front * movement.y;
     c_pos += glm::normalize(glm::cross(front, up)) * speed * movement.x;
+
+    updateView();
 }
 
 void Camera::updateView() {

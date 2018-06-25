@@ -7,7 +7,6 @@ StateManager::StateManager()
 }
 
 void StateManager::init() {
-    sceneGraph->init();
 }
 
 void StateManager::update() {

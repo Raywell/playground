@@ -5,10 +5,10 @@ Asset(name)
 {
 }
 
-Geometry::load() {
+void Geometry::load() {
     mesh->load();
 }
 
-Geometry::unload() {
+void Geometry::unload() {
     mesh->unload();
 }

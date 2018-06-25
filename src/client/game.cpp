@@ -19,7 +19,7 @@ void Game::run() {
     windowM->createRenderingWindow("Playground",800,600); // Create Window
     windowM->bindCloseWindowKeyAction(GLFW_KEY_ESCAPE, GLFW_PRESS); // Close button binding
 
-    Camera *camera = new Camera(45.0f); // Creating Camera
+    Camera *camera = new Camera(45.0f); // Creating Camera // TODO avoid new in client code
 
     Renderer *R = E->getRenderer();
     R->registerCamera(camera); // Registering Camera // TODO put inside the scenegraph ?
@@ -27,11 +27,20 @@ void Game::run() {
     SceneGraph *sGraph = E->getSceneGraph();
     SceneNode *root = sGraph->getRoot();
 
-    E->run();
-
     // Building scenegraph
     root->addChild(camera); // Adding camera to root
     addDonut(root);
+    sGraph->load();
+
+    ShaderManager *shaderM = E->getShaderManager();
+    shaderM->createProgram();
+    std::map<ShaderType, std::vector<std::string>> shaders {
+       { ShaderType::V, { VertexShader::getSource() } },
+       { ShaderType::F, { FragmentShader::getSource() } }
+    };
+    shaderM->compileShaders(shaders);
+
+    E->run();
 
     // DEBUG : Printing names of objects in graph
     sGraph->debug_printGraphObjects();
@@ -41,10 +50,11 @@ void Game::run() {
 }
 
 void Game::addDonut(SceneNode *node) {
-    RM = E->getResourceManager();
-    
+    auto assetM = E->getAssetManager();
+
     // Assets should go on heap
-    Mesh *donut_mesh = RM->registerAsset<Mesh>("donut");
+    Mesh *m_donut = assetM->registerAsset<Mesh>("m_donut", "");
+    m_donut->setMeshType(MeshType::STATIC);
 
     // Test data
     // set up vertex data (and buffer(s)) and configure vertex attributes
@@ -128,7 +138,6 @@ void Game::addDonut(SceneNode *node) {
 */
 
     const unsigned int nTr = 16*4; // 2 faces and outer&inner fill
-    const unsigned int nVert = 16*2;
     const unsigned int nInd = nTr * 3;
     std::vector<GLuint> indicesChrys(nInd);
     GLuint v_offset;
@@ -175,12 +184,13 @@ void Game::addDonut(SceneNode *node) {
         }
     }
 
-    donut_mesh->setVertices(verticesChrys);
-    donut_mesh->setIndices(indicesChrys);
+    m_donut->setVertices(verticesChrys);
+    m_donut->setIndices(indicesChrys);
 
-    Geometry *donut_g = new Geometry("DonutGeom"); // TODO : AssetManager
-    donut_g->setMesh(donut_mesh);
-    node->addChild(donut_g);
+    Geometry *g_donut = assetM->registerAsset<Geometry>("g_donut");
+    g_donut->setMesh(m_donut);
 
-    //donut_mesh->release(); // TODO
+    SceneNodeGeometry *n_donut = new SceneNodeGeometry("n_donut"); // TODO avoid new in client code
+    n_donut->setGeometry(g_donut);
+    node->addChild(n_donut);
 }

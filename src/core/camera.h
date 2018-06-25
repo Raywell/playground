@@ -16,6 +16,7 @@ public:
     virtual ~Camera();
 
     // Override
+    void loadSelf();
     void updateSelf();
 
     glm::mat4 getView();

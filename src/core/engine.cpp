@@ -13,25 +13,39 @@ StateManager *stateM = NULL;
 Renderer *R = NULL;
 SceneGraph *sceneGraph = NULL;
 AssetManager *assetM = NULL;
-BufferManager *bufferM = NULL;
+BufferObjectManager *bufferObjectM = NULL;
+ShaderManager *shaderM = NULL;
 
 using namespace std::literals::chrono_literals;
 
+static void error_callback(int error, const char* description)
+{
+    fputs(description, stderr);
+}
+
 Engine::Engine()
 {
-    glfwInit();
+    glfwSetErrorCallback(error_callback);
+    if (!glfwInit()) {
+        throw std::runtime_error("Failed to initialize GLFW");
+    }
 
     inputM = new InputManager();
-    windowM = new WindowManager();
+    windowM = new WindowManager(this);
     stateM = new StateManager();
     R = new Renderer();
     sceneGraph = new SceneGraph();
     assetM = new AssetManager();
-    bufferM = new BufferManager();
+    bufferObjectM = new BufferObjectManager();
+    shaderM = new ShaderManager();
+
+    R->init();
+    stateM->init();
 }
 
 Engine::~Engine() {
-    bufferM->release();
+    delete shaderM;
+    bufferObjectM->release();
     assetM->release();
     sceneGraph->release();
     R->release();
@@ -41,10 +55,11 @@ Engine::~Engine() {
     glfwTerminate();
 }
 
-void Engine::run() {
-    R->initData(); // TODO remove
-    stateM->init();
+void Engine::initOnWindowCreation() {
+    bufferObjectM->init();
+}
 
+void Engine::run() {
     loop();
 }
 
